@@ -3,17 +3,14 @@ const cheerio = require("cheerio");
 const mongoose = require("mongoose");
 var schema = require("./model/model");
 var uri = require("./config/key").MongoURI;
-console.log("bas kar bhai");
 mongoose
   .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("Mongoose connected");
   })
   .catch((err) => console.log(err));
-console.log("bas kar bhai");
 
 var c = 0;
-console.log("bas kar bhai");
 
 for (let start = 10; start <= 230; start += 10) {
   request(
@@ -45,7 +42,6 @@ for (let start = 10; start <= 230; start += 10) {
           imgCounter++;
           imgArray.push(imgUrl);
         });
-        // console.log(imgCounter);
         // location and business hours
         var x = $("a.css-s3mx9d").each((i, el) => {
           var uris = $(el).attr("href");
@@ -59,7 +55,6 @@ for (let start = 10; start <= 230; start += 10) {
             if (!err && res.statusCode == 200) {
               cou++;
 
-              // console.log(urlpaths[ind]);
               const $ = cheerio.load(html);
               // Address
               addressArray[ind] = $("p.css-chtywg").text();
@@ -96,21 +91,6 @@ for (let start = 10; start <= 230; start += 10) {
                 latArray[ind] = lat;
                 lngArray[ind] = lng;
               }
-              // console.log(
-              // titleArray[ind],
-              //   imgArray[ind],
-              //   addressArray[ind],
-              //   latArray[ind],
-              //   lngArray[ind],
-              //   hourArray[ind];
-              // );
-              // var title = titleArray[ind];
-              // var imgurl = imgArray[ind];
-              // var address = addressArray[ind];
-              // var latitude = latArray[ind];
-              // var longtitude = lngArray[ind];
-              // var hours = hourArray[ind];
-              // console.log(title, imgurl, address, latitude, longtitude, hours);
               // Saving in the database
               if (
                 titleArray[ind] != null &&
